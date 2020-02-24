@@ -1,0 +1,22 @@
+<div class="contenedor">
+    <h1>Cars List</h1>
+    <div *ngFor="let car of cars">
+        <a [routerLink]="['/car-edit', car.id]">
+            <div class="card">
+                <div class="img-card">
+                    <img src="{{car.giphyUrl}}" alt="">
+                </div>
+                <div class="contenido-card">
+                    <h2>{{car.name}}</h2>
+                    <p>Propietario: {{car.ownerDni | noPropietario}}</p>
+                </div>
+            </div>
+        </a>
+        <hr>
+    </div>
+    <a [routerLink]="['/car-add']" class="add">
+
+        <span>Add</span>
+
+    </a>
+</div>

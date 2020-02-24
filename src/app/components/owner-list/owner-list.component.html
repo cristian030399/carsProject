@@ -1,0 +1,28 @@
+<div class="contenedor">
+    <h1>Owners List</h1>
+    <div *ngFor="let owner of owners" class="card">
+        <input type="checkbox" [value]="owner._links.self.href" [id]="owner.dni" *ngIf="borrar">
+        <label [for]="owner.dni" *ngIf="borrar"></label>
+        <a [routerLink]="['/owner-edit', owner.dni]">
+            <div class="card">
+                <h3>{{owner.dni}} - {{owner.name}}</h3>
+            </div>
+        </a>
+        <hr>
+    </div>
+    <div class="botones">
+        <a [routerLink]="['/owner-add']" class="boton" *ngIf="!borrar">
+            <span>Add</span>
+        </a>
+        <a (click)="borrar=!borrar" class="boton" *ngIf="!borrar">
+            <span>Delet</span>
+        </a>
+        <a class="boton del" (click)="borrarOwner()" *ngIf="borrar">
+            <span>Aceptar</span>
+        </a>
+        <a class="boton del" (click)="borrar=!borrar" *ngIf="borrar">
+            <span>Cancelar</span>
+        </a>
+    </div>
+
+</div>
