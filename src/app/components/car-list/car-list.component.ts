@@ -20,6 +20,11 @@ export class CarListComponent implements OnInit {
       this.cars = data;
       for (const car of this.cars) {
         this.giphyService.get(car.name).subscribe(url => car.giphyUrl = url);
+        if (car.ownerDni == null) {
+          car.owner = '';
+        } else {
+          this.ownerService.get(car.ownerDni).subscribe((owner: any) => car.owner = owner.name);
+        }
       }
     });
   }
