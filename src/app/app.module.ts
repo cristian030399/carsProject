@@ -15,7 +15,7 @@ import { CarEditComponent } from './components/car-edit/car-edit.component';
 import { OwnerListComponent } from './components/owner-list/owner-list.component';
 import { OwnerEditComponent } from './components/owner-edit/owner-edit.component';
 import { NoPropietarioPipe } from './pipes/no-propietario.pipe';
-
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -31,7 +31,8 @@ import { NoPropietarioPipe } from './pipes/no-propietario.pipe';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

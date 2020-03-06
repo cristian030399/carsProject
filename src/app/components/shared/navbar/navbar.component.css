@@ -17,13 +17,14 @@ nav {
 }
 
 .items {
-    width: 20%;
+    margin-right: 5%;
 }
 
 .items ul {
     list-style: none;
     display: flex;
-    justify-content: space-around;
+    justify-content: right;
+    align-items: center;
 }
 
 .items ul li {

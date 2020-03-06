@@ -1,1 +1,29 @@
-<p>car-edit works!</p>
+<h1>{{car.href? 'Edit' : 'Add'}} Car</h1>
+<div class="contenedor">
+
+    <div class="giphy" *ngIf="car.href">
+        <img src="{{car.giphyUrl}}" alt="{{car.name}}">
+    </div>
+    <form #carForm="ngForm" (ngSubmit)="save(carForm.value)">
+
+        <input type="hidden" name="href" [(ngModel)]="car.href">
+        <div class="elemento">
+            <p>Car Name*:</p>
+            <input matInput placeholder="Car Name" required [(ngModel)]="car.name" name="name" #name>
+        </div>
+        <div class="elemento">
+            <p>Propietario:</p>
+            <select name="ownerDni" [(ngModel)]="car.ownerDni" [compareWith]="compararOwner" #ownerDni>
+                <option [ngValue]=null>No tiene propietario</option>
+                <option [ngValue]="owner.dni" *ngFor="let owner of owners">{{owner.dni}} - {{owner.name}}</option>
+            </select>
+        </div>
+
+        <div class="botones">
+            <button class="save boton" type="submit" [disabled]="!carForm.form.valid">Save</button>
+            <button class="delete boton" (click)="remove(car.href)" *ngIf="car.href" type="button">Delete</button>
+            <a class="cancel" routerLink="/car-list">Cancel</a>
+        </div>
+
+    </form>
+</div>

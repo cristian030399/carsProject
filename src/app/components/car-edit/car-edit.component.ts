@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { OwnerService } from 'src/app/services/owner.service';
+import { CarService } from 'src/app/services/car.service';
+import { GiphyService } from 'src/app/services/giphy.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-car-edit',
@@ -6,10 +11,57 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./car-edit.component.css']
 })
 export class CarEditComponent implements OnInit {
+  car: any = {};
+  owners: Array<any>;
 
-  constructor() { }
+  constructor(private route: ActivatedRoute, private router: Router, private ownerService: OwnerService, private carService: CarService,
+    private giphyService: GiphyService) { }
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      const id = params['id'];
+      if (id) {
+        this.carService.get(id).subscribe((car: any) => {
+          if (car) {
+
+            this.car = car;
+            this.car.href = car._links.self.href;
+            this.giphyService.get(car.name).subscribe(url => car.giphyUrl = url);
+            
+          } else {
+            console.log(`Car with id '${id}' not found, returning to list`);
+            this.gotoList();
+          }
+        });
+      }
+    });
+    this.ownerService.getAll().subscribe(data => {
+      this.owners = data._embedded.owners;
+    });
+  }
+
+  gotoList() {
+    this.router.navigate(['/car-list']);
+  }
+
+  save(form: NgForm) {
+    this.carService.save(form).subscribe(result => {
+      this.gotoList();
+    }, error => console.error(error));
+  }
+
+  remove(href) {
+    this.carService.remove(href).subscribe(result => {
+      this.gotoList();
+    }, error => console.error(error));
+  }
+
+  compararOwners(obj1, obj2) {
+    if (this.car.ownerDni == null || obj1 == null) {
+      return false;
+    } else {
+      return obj1 === this.car.ownerDni;
+    }
   }
 
 }

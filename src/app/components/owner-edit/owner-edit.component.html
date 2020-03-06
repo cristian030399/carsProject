@@ -1,1 +1,26 @@
-<p>owner-edit works!</p>
+<div class="contenedor">
+
+
+    <form #ownerForm="ngForm" (ngSubmit)="save(ownerForm.value)">
+        <h1>{{owner.href? 'Edit' : 'Add'}} Owner</h1>
+        <input type="hidden" name="href" [(ngModel)]="owner.href">
+        <div class="elemento">
+            <p>Owner Dni*:</p>
+            <input matInput placeholder="Owner Dni" required [(ngModel)]="owner.dni" name="dni" #dni>
+        </div>
+        <div class="elemento">
+            <p>Owner Name*:</p>
+            <input matInput placeholder="Owner Name" required [(ngModel)]="owner.name" name="name" #name>
+        </div>
+        <div class="elemento">
+            <p>Owner Profession*:</p>
+            <input matInput placeholder="Owner Profession" required [(ngModel)]="owner.profession" name="profession" #profession>
+        </div>
+
+        <div class="botones">
+            <button class="save boton" type="submit" [disabled]="!ownerForm.form.valid">Save</button>
+            <button class="delete boton" (click)="remove()" *ngIf="owner.href" type="button">Delete</button>
+            <a class="cancel" routerLink="/owner-list">Cancel</a>
+        </div>
+    </form>
+</div>

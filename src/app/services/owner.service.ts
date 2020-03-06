@@ -20,6 +20,16 @@ export class OwnerService {
     return this.http.get(this.Search_API + id);
   }
 
+  save(owner: any): Observable<any> {
+    let result: Observable<Object>;    
+    if (owner['href']) {
+      result = this.http.put(owner.href, owner);
+    } else {
+      result = this.http.post(this.OWNER_API, owner);
+    }
+    return result;
+  }
+
   remove(href: string) {
     return this.http.delete(href);
   }
